@@ -45,15 +45,15 @@ return {
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
 
-  -- Neo-tree configuration for showing hidden files
+  -- Neo-tree configuration for hiding dotfiles
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       filesystem = {
         filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = false,
+          visible = false,
+          hide_dotfiles = true,
+          hide_gitignored = true,
         },
       },
     },
