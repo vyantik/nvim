@@ -1,15 +1,35 @@
 return {
-  "Saghen/blink.cmp",
-  optional = true,
-  opts = function(_, opts)
-    if not opts.keymap then opts.keymap = {} end
-    opts.keymap["<Tab>"] = {
-      "snippet_forward",
-      function()
-        if vim.g.ai_accept then return vim.g.ai_accept() end
-      end,
-      "fallback",
+  "Exafunction/codeium.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "hrsh7th/nvim-cmp",
+  },
+  event = "BufEnter",
+  config = function()
+    require("codeium").setup {
+      enable_beta_features = true,
+      tools = {
+        codeium = {
+          language = "ru",
+        },
+      },
     }
-    opts.keymap["<S-Tab>"] = { "snippet_backward", "fallback" }
   end,
+  specs = {
+    {
+      "AstroNvim/astrocore",
+      opts = {
+        options = {
+          g = {
+            ai_accept = function()
+              if require("codeium").is_accepting_suggestion() then
+                require("codeium").accept_suggestion()
+                return true
+              end
+            end,
+          },
+        },
+      },
+    },
+  },
 }
